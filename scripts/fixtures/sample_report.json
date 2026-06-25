@@ -1,0 +1,103 @@
+{
+  "entities": [
+    {
+      "records": [
+        {
+          "record_values": {
+            "AdId": [{"value": "1001"}],
+            "ProfileId": [{"value": "775"}],
+            "CampaignId": [{"value": "2001"}],
+            "CampaignName": [{"value": "Spring Spain"}],
+            "Headline": [{"value": "Oferta primavera"}],
+            "Channel": [{"value": "Paid Social"}],
+            "source": [{"value": "Meta"}],
+            "Brand (Ads)": [{"value": "Brand A"}],
+            "Impressions": [{"value": "1000"}],
+            "Clicks": [{"value": "90"}],
+            "Conversion": [{"value": "12"}],
+            "CTR": [{"value": "9.0"}],
+            "ImageUrl": [{"value": "https://cdn.example.com/img/ad-1001.jpg"}],
+            "Country": [{"value": "ES"}],
+            "AdTypeName": [{"value": "Image"}]
+          }
+        },
+        {
+          "record_values": {
+            "AdId": [{"value": "1002"}],
+            "ProfileId": [{"value": "776"}],
+            "CampaignId": [{"value": "2001"}],
+            "CampaignName": [{"value": "Spring Spain"}],
+            "Headline": [{"value": "Nueva coleccion"}],
+            "Channel": [{"value": "Paid Social"}],
+            "source": [{"value": "Meta"}],
+            "Brand (Ads)": [{"value": "Brand A"}],
+            "Impressions": [{"value": "1500"}],
+            "Clicks": [{"value": "18"}],
+            "Conversion": [{"value": "2"}],
+            "CTR": [{"value": "1.2"}],
+            "ImageUrl": [{"value": "https://cdn.example.com/img/ad-1002.png"}],
+            "Country": [{"value": "ES"}],
+            "AdTypeName": [{"value": "Image"}]
+          }
+        },
+        {
+          "record_values": {
+            "AdId": [{"value": "1003"}],
+            "ProfileId": [{"value": "775"}],
+            "CampaignId": [{"value": "2002"}],
+            "CampaignName": [{"value": "Video Spain"}],
+            "Headline": [{"value": "Video creativo"}],
+            "Channel": [{"value": "Paid Social"}],
+            "source": [{"value": "Meta"}],
+            "Brand (Ads)": [{"value": "Brand B"}],
+            "Impressions": [{"value": "2000"}],
+            "Clicks": [{"value": "40"}],
+            "Conversion": [{"value": "4"}],
+            "CTR": [{"value": "2.0"}],
+            "ImageUrl": [{"value": "https://cdn.example.com/video/ad-1003.jpg"}],
+            "Country": [{"value": "ES"}],
+            "AdTypeName": [{"value": "Video"}]
+          }
+        },
+        {
+          "record_values": {
+            "AdId": [{"value": "1004"}],
+            "ProfileId": [{"value": "888"}],
+            "CampaignId": [{"value": "2003"}],
+            "CampaignName": [{"value": "France Brand"}],
+            "Headline": [{"value": "Bonjour"}],
+            "Channel": [{"value": "Display"}],
+            "source": [{"value": "Google"}],
+            "Brand (Ads)": [{"value": "Brand C"}],
+            "Impressions": [{"value": "1100"}],
+            "Clicks": [{"value": "66"}],
+            "Conversion": [{"value": "8"}],
+            "CTR": [{"value": "6.0"}],
+            "ImageUrl": [{"value": "https://cdn.example.com/img/ad-1004.jpeg"}],
+            "Country": [{"value": "FR"}],
+            "AdTypeName": [{"value": "Image"}]
+          }
+        },
+        {
+          "record_values": {
+            "AdId": [{"value": "1005"}],
+            "ProfileId": [{"value": "775"}],
+            "CampaignId": [{"value": "2004"}],
+            "CampaignName": [{"value": "Summer Spain"}],
+            "Headline": [{"value": "Ultimas rebajas"}],
+            "Channel": [{"value": "Display"}],
+            "source": [{"value": "Google"}],
+            "Brand (Ads)": [{"value": "Brand D"}],
+            "Impressions": [{"value": "800"}],
+            "Clicks": [{"value": "16"}],
+            "Conversion": [{"value": "1"}],
+            "CTR": [{"value": "2.0"}],
+            "ImageUrl": [{"value": "https://cdn.example.com/img/ad-1005.webp"}],
+            "Country": [{"value": "ES"}],
+            "AdTypeName": [{"value": "Image"}]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skai"
+  short_description: "Enriquece datasets con ImageUrl desde Skai"
+  default_prompt: "Use $skai para tomar un dataset base y anadir ImageUrl desde Skai por AdId."

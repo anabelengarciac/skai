@@ -1,0 +1,95 @@
+{
+  "group_by": ["ad_id"],
+  "fields": [
+    {
+      "output": "AdId",
+      "name": "AdId",
+      "group": "ATTRIBUTES",
+      "aliases": ["AdId", "ad_id", "Ad ID"]
+    },
+    {
+      "output": "profile_id",
+      "name": "ProfileId",
+      "group": "ATTRIBUTES",
+      "aliases": ["ProfileId", "profile_id", "Profile ID"]
+    },
+    {
+      "output": "CampaignId",
+      "name": "CampaignId",
+      "group": "ATTRIBUTES",
+      "aliases": ["CampaignId", "campaign_id", "Campaign ID"]
+    },
+    {
+      "output": "CampaignName",
+      "name": "CampaignName",
+      "group": "ATTRIBUTES",
+      "aliases": ["CampaignName", "campaign_name", "Campaign Name"]
+    },
+    {
+      "output": "Headline",
+      "name": "AdName",
+      "group": "ATTRIBUTES",
+      "aliases": ["AdName", "Headline", "headline", "Ad Name"]
+    },
+    {
+      "output": "Channel",
+      "name": "Channel",
+      "group": "ATTRIBUTES",
+      "aliases": ["Channel", "channel", "ChannelName"]
+    },
+    {
+      "output": "source",
+      "name": "AccountName",
+      "group": "ATTRIBUTES",
+      "aliases": ["AccountName", "Account Name", "source", "Source"]
+    },
+    {
+      "output": "brand",
+      "name": "Brand (Ads)",
+      "group": "DIMENSIONS",
+      "aliases": ["Brand (Ads)", "brand", "Brand"]
+    },
+    {
+      "output": "impressions",
+      "name": "Impressions",
+      "group": "PERFORMANCE",
+      "aliases": ["Impressions", "impressions"]
+    },
+    {
+      "output": "Clicks",
+      "name": "Clicks",
+      "group": "PERFORMANCE",
+      "aliases": ["Clicks", "clicks"]
+    },
+    {
+      "output": "Conversion",
+      "name": "Conversion",
+      "group": "PERFORMANCE",
+      "aliases": ["Conversion", "Conversions", "conversion"]
+    },
+    {
+      "output": "CTR",
+      "name": "CTR",
+      "group": "PERFORMANCE",
+      "aliases": ["CTR", "ctr"]
+    },
+    {
+      "output": "ImageUrl",
+      "name": "ImageUrl",
+      "group": "ATTRIBUTES",
+      "aliases": ["ImageUrl", "image_url", "Image URL"]
+    },
+    {
+      "output": "Country",
+      "name": "Country",
+      "group": "DIMENSIONS",
+      "aliases": ["Country", "country"]
+    },
+    {
+      "output": "AdTypeName",
+      "name": "AdTypeName",
+      "group": "ATTRIBUTES",
+      "aliases": ["AdTypeName", "ad_type_name", "Ad Type Name"]
+    }
+  ]
+}
