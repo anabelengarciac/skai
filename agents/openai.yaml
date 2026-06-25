@@ -1,4 +1,4 @@
 interface:
-  display_name: "Skai"
-  short_description: "Enriquece datasets con ImageUrl desde Skai"
-  default_prompt: "Use $skai para tomar un dataset base y anadir ImageUrl desde Skai por AdId."
+  display_name: "Spirits Creative Image Enrichment"
+  short_description: "Add creative image URLs to performance datasets"
+  default_prompt: "Use $spirits-creative-image-enrichment to enrich a trusted performance dataset with Skai ImageUrl mappings for creative analytics."

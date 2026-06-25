@@ -3,7 +3,7 @@
 ## Credenciales
 
 Esta skill puede leer un `.env` automaticamente desde la raiz de la skill.
-El fichero esperado es [/.env](./skai/.env) y puede incluir:
+El fichero esperado es `.env` in the skill root y puede incluir:
 
 - `SKAI_CLIENT_ID`
 - `SKAI_REFRESH_TOKEN`
@@ -26,24 +26,24 @@ La fuente de verdad para metricas debe seguir siendo la base externa.
 ## Comando base
 
 ```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
+python3 scripts/skai_image_ctr_report.py \
   --input-dataset /tmp/base_bq.csv \
   --start-date 2026-03-01 \
   --end-date 2026-03-31 \
-  --output-dir /tmp/skai-enriched-usa
+  --output-dir /tmp/spirits-image-enriched-usa
 ```
 
 Si el dataset base usa nombres distintos para `AdId` o pais, pasalos por CLI:
 
 ```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
+python3 scripts/skai_image_ctr_report.py \
   --input-dataset /tmp/base_bq.csv \
   --input-ad-id-column my_ad_id \
   --input-country-column my_country \
   --country ES \
   --start-date 2025-04-01 \
   --end-date 2025-04-30 \
-  --output-dir /tmp/skai-enriched-es
+  --output-dir /tmp/spirits-image-enriched-es
 ```
 
 Por defecto el script excluye `EXCLUDED_BRAND` y `Excluded Brand`; si alguna vez quieres incluirlos, usa `--include-brand`.
@@ -127,10 +127,10 @@ En esta cuenta concreta, el mapeo que ha funcionado es:
 ## Prueba local sin API
 
 ```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
+python3 scripts/skai_image_ctr_report.py \
   --input-dataset /tmp/base_bq.csv \
   --start-date 2026-03-01 \
   --end-date 2026-03-31 \
   --output-dir /tmp/skai-sample \
-  --input-json ./skai/scripts/fixtures/sample_report.json
+  --input-json scripts/fixtures/sample_report.json
 ```
