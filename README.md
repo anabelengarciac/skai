@@ -1,140 +1,88 @@
----
-name: skai
-description: Enriquecer un dataset base con `ImageUrl` desde Skai usando `AdId` como clave de mapping. Usar cuando Codex necesite tomar una base externa, normalmente exportada desde BigQuery, y anadir la URL de imagen correspondiente a cada fila sin usar Skai como fuente principal de metricas de performance. Si no se especifica pais, asumir USA por defecto.
----
+# Skai Image Enrichment Skill
 
-# Skai
+![Status](https://img.shields.io/badge/status-showcase_ready-2ea44f)
+![Domain](https://img.shields.io/badge/domain-marketing_analytics-0969da)
+![Stack](https://img.shields.io/badge/stack-python_%7C_api_enrichment_%7C_csv_json-6f42c1)
 
-## Overview
+A marketing analytics enrichment workflow that joins a trusted external performance dataset with creative image metadata from Skai. The goal is deliberately narrow: keep performance metrics in the source of truth, and use Skai only to enrich rows with image URLs and creative context.
 
-Usar esta skill para tomar un dataset base ya preparado fuera de Skai y enriquecerlo con `ImageUrl`. La fuente de verdad para impresiones, clicks, conversiones, CTR y demas metricas debe seguir siendo el dataset externo, por ejemplo BigQuery. Skai se usa solo para construir el mapping `AdId -> ImageUrl` y anadirlo a cada fila.
+## Why It Matters
 
-El flujo correcto es:
+Creative analysis often breaks because performance data and creative assets live in different systems. This skill creates a clean bridge: analysts can keep their curated metrics while adding the visual layer needed for creative review, CTR analysis, and stakeholder storytelling.
 
-1. partir de una base externa con las columnas de negocio y metricas ya definidas
-2. consultar Skai para obtener `AdId`, `ImageUrl` y metadata minima
-3. filtrar en Skai solo creatividades con imagen y excluir video
-4. excluir `EXCLUDED_BRAND` y `Excluded Brand` por defecto, salvo que el usuario pida incluirlos
-5. hacer el join por `AdId`
-6. exportar una base final enriquecida lista para analisis posterior
+| Business value | Technical value |
+| --- | --- |
+| Faster creative performance reviews | API-based `AdId -> ImageUrl` mapping |
+| Keeps metrics aligned with the trusted source | Enrichment-only design, no metric replacement |
+| Better analyst handoff files | CSV and JSON outputs with match status |
+| Handles messy IDs and reused creatives | Ad ID normalization and one-to-many image handling |
 
-Si la misma imagen aparece en muchas filas, eso no es un error: significa que la creatividad se reutiliza en multiples ads o contextos. Esta skill no agrega ni deduplica por imagen en la salida final enriquecida; conserva una fila por fila del dataset base.
+## What It Can Do
 
-## Workflow
+- Read a base performance dataset from CSV or JSON.
+- Extract or normalize ad identifiers from common naming patterns.
+- Query Skai for ad image metadata in a date range.
+- Filter non-image or video creatives when needed.
+- Join image metadata back onto the original dataset.
+- Export enriched records, mapping tables, and run summaries.
 
-1. Confirmar el dataset base, el rango de fechas y el pais. Si no se especifica pais, asumir `USA`.
-2. Revisar [configuration.md](./skai/references/configuration.md) si faltan credenciales o si hay dudas con el nombre de la columna de `AdId`.
-3. Ejecutar [skai_image_ctr_report.py](./skai/scripts/skai_image_ctr_report.py) con el dataset base y el rango pedido.
-4. Entregar:
-   - `enriched_ad_records`
-   - `skai_image_mapping`
-   - `summary.json`
-5. Explicar el resultado como una base enriquecida:
-   - metricas desde la fuente externa
-   - `ImageUrl` desde Skai
-6. Si el usuario quiere luego una vista agregada por imagen, construirla despues a partir de `enriched_ad_records`, no durante el mapping.
+## Enrichment Flow
 
-## Command Pattern
-
-```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
-  --input-dataset /tmp/base_bq.csv \
-  --start-date 2025-04-01 \
-  --end-date 2025-04-30 \
-  --output-dir /tmp/skai-enriched-usa
+```mermaid
+flowchart LR
+    A["Curated performance dataset"] --> B["Normalize AdId"]
+    B --> C["Query Skai image metadata"]
+    C --> D["Filter and deduplicate mapping"]
+    D --> E["Join by AdId"]
+    E --> F["Enriched analytics export"]
 ```
 
-Si el dataset base usa nombres de BigQuery sin transformar, normalmente basta con dejar que la skill detecte:
+## Repository Structure
 
-- `L1_UNIQUE_AD_ID` como clave base para extraer `AdId`
-- `L1_SKAI_COUNTRY_CODE_ISO2` como columna de pais
-
-Si tu base usa otros nombres, pasalos de forma explicita:
-
-```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
-  --input-dataset /tmp/base_bq.csv \
-  --input-ad-id-column my_ad_id \
-  --input-country-column my_country \
-  --country ES \
-  --start-date 2025-04-01 \
-  --end-date 2025-04-30 \
-  --output-dir /tmp/skai-enriched-es
+```text
+.
+|-- SKILL.md
+|-- agents/openai.yaml
+|-- references/
+|   |-- configuration.md
+|   `-- field-config.example.json
+`-- scripts/
+    |-- fixtures/sample_report.json
+    `-- skai_image_ctr_report.py
 ```
 
-Si quieres incluir `EXCLUDED_BRAND`, anadir `--include-brand`.
+## Example Command
 
-## Inputs
-
-El dataset base puede ser CSV o JSON y debe incluir al menos una columna con `AdId` o un identificador del que se pueda extraer, por ejemplo:
-
-- `AdId`
-- `ad_id`
-- `L1_UNIQUE_AD_ID`
-
-Si el dataset base contiene `L1_UNIQUE_AD_ID`, la skill extrae automaticamente el `AdId` como el primer segmento antes del primer `_`, pero deja la columna original intacta.
+```bash
+python3 scripts/skai_image_ctr_report.py \
+  --input-dataset /tmp/base_performance.csv \
+  --input-ad-id-column ad_id \
+  --country US \
+  --start-date 2025-04-01 \
+  --end-date 2025-04-30 \
+  --output-dir /tmp/skai-enriched
+```
 
 ## Outputs
 
-- `enriched_ad_records.csv/json`: dataset base original mas columnas anadidas desde Skai
-- `skai_image_mapping.csv/json`: tabla de mapping por `AdId` con `ImageUrl` y metadata minima de Skai
-- `summary.json`: contadores de cobertura y matching
+| Output | Purpose |
+| --- | --- |
+| `enriched_ad_records.csv/json` | Original dataset plus image metadata |
+| `skai_image_mapping.csv/json` | Reusable `AdId -> ImageUrl` mapping |
+| `summary.json` | Match rates, filters, and run diagnostics |
 
-Las columnas anadidas en `enriched_ad_records` son:
+## Design Principles
 
-- `ImageUrl`
-- `ImageUrlCount`
-- `SkaiMatchStatus`
-- `SkaiMatchedAdId`
+- Never replace curated performance metrics with platform exports.
+- Keep one output row per input row unless the analyst explicitly asks for aggregation.
+- Make match status visible instead of silently dropping records.
+- Support account-specific field mappings through configuration.
+- Keep credential files outside the repository.
 
-`ImageUrl` puede contener varias URLs separadas por ` | ` si un mismo `AdId` en Skai aparece asociado a mas de una imagen distinta en el rango consultado.
+## Skills Demonstrated
 
-## Matching Rules
+`marketing analytics`  -  `API enrichment`  -  `data joining`  -  `Python ETL`  -  `CSV/JSON pipelines`  -  `creative performance analysis`  -  `data quality checks`
 
-- la clave principal de join es `AdId`
-- si el dataset base trae un identificador compuesto como `3734766_759_USA`, se usa `3734766` para hacer match con Skai
-- por defecto se filtra el dataset base al pais pedido si existe una columna de pais detectable
-- Skai se filtra por pais, por `profile_id` si se define, y solo deja filas con `ImageUrl`
+## Security
 
-## Field Mapping
-
-En Skai se consultan por defecto estos campos:
-
-- `AdId`
-- `profile_id`
-- `CampaignId`
-- `CampaignName`
-- `Headline`
-- `Channel`
-- `source`
-- `brand`
-- `ImageUrl`
-- `Country`
-- `AdTypeName`
-
-Los nombres del dataset externo no tienen que coincidir con los de Skai. El mapping relevante es:
-
-- `L1_UNIQUE_AD_ID` -> `AdId` extraido
-- `L1_SKAI_COUNTRY_CODE_ISO2` -> `country`
-
-Si tu cuenta de Skai usa otros nombres de campo para `ImageUrl` o `AdId`, copiar y ajustar [field-config.example.json](./skai/references/field-config.example.json) y ejecutar con `--field-config`.
-
-## Testing
-
-Para probar el pipeline sin llamar al API, usar el fixture `scripts/fixtures/sample_report.json` junto con un CSV o JSON pequeño como dataset base.
-
-```bash
-python3 ./skai/scripts/skai_image_ctr_report.py \
-  --input-dataset /tmp/base_bq.csv \
-  --start-date 2026-03-01 \
-  --end-date 2026-03-31 \
-  --output-dir /tmp/skai-sample \
-  --input-json ./skai/scripts/fixtures/sample_report.json
-```
-
-## Notes
-
-- No usar Skai como fuente principal de performance si ya existe una tabla curada en BigQuery.
-- Usar Skai para el mapping `AdId -> ImageUrl`.
-- Si hay filas sin match, revisar primero el rango de fechas y luego la columna usada como `AdId`.
-- Si el API devuelve error por nombres de campo, ajustar el `field-config`.
+This is a sanitized showcase repository. It contains no Skai credentials, client IDs, refresh tokens, profile IDs, private image URLs, or proprietary performance exports.
