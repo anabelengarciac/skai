@@ -1,19 +1,21 @@
-# Spirits Creative Image Enrichment
+# Creative Asset Enrichment Workflow
 
-![Status](https://img.shields.io/badge/status-showcase_ready-2ea44f)
-![Built for](https://img.shields.io/badge/built_for-final_degree_project-0969da)
+> Connects trusted campaign performance data with the creative image references needed for AI visual analysis.
+
+![Status](https://img.shields.io/badge/status-product_workflow-2ea44f)
+![Built for](https://img.shields.io/badge/context-final_degree_project-0969da)
 ![Domain](https://img.shields.io/badge/domain-creative_analytics_enrichment-6f42c1)
 ![Stack](https://img.shields.io/badge/stack-python_%7C_skai_api_%7C_csv_json-8250df)
 
 A data-enrichment workflow built for my Final Degree Project, **"Analysis of advertising creatives in spirits through AI"**. It connects trusted performance data with the image URLs needed to analyze advertising creatives visually.
 
-In the thesis workflow, performance metrics such as impressions, clicks, and CTR came from a curated source. The missing piece was the visual layer: the image associated with each ad. This skill used Skai as an enrichment source, mapping `AdId -> ImageUrl` so the final dataset could be used for AI-assisted creative analysis.
+In the thesis workflow, performance metrics such as impressions, clicks, and CTR came from a curated source. The missing piece was the visual layer: the image associated with each ad. This workflow used the ad platform as an enrichment source, mapping `AdId -> ImageUrl` so the final dataset could be used for AI-assisted creative analysis.
 
-## Why It Matters
+## Product Impact
 
 Creative-performance research needs both sides of the dataset: reliable metrics and accessible creative assets. Platform exports often separate those layers, and using the ad platform as the main performance source can create inconsistencies when a curated warehouse already exists.
 
-This skill solves that by keeping performance metrics in the trusted source and using Skai only to enrich each record with creative image metadata.
+This workflow solves that by keeping performance metrics in the trusted source and using the ad platform only to enrich each record with creative image metadata.
 
 | Research need | What this skill provides |
 | --- | --- |
@@ -23,12 +25,12 @@ This skill solves that by keeping performance metrics in the trusted source and 
 | Handle reused creative assets | Image URL counts and match status |
 | Support auditability | Mapping table, enriched output, and summary diagnostics |
 
-## Role In My TFG
+## Functional Flow
 
 ```mermaid
 flowchart LR
     A["Curated performance data"] --> B["Extract AdId"]
-    B --> C["Query Skai for ImageUrl"]
+    B --> C["Query platform for ImageUrl"]
     C --> D["Build image mapping"]
     D --> E["Enrich performance dataset"]
     E --> F["Group by creative image"]
@@ -48,12 +50,12 @@ The broader thesis methodology used this enrichment step to:
 
 - Read a base performance dataset from CSV or JSON.
 - Detect or normalize ad identifiers from fields such as `AdId`, `ad_id`, or compound IDs.
-- Query Skai for image metadata within a date range and country.
+- Query the platform for image metadata within a date range and country.
 - Filter non-image or video creatives when needed.
 - Join image metadata back to the original performance dataset.
 - Export enriched records, mapping tables, and run summaries.
 
-## Repository Structure
+## Code And Installation
 
 ```text
 .
@@ -100,6 +102,6 @@ python3 scripts/skai_image_ctr_report.py \
 
 `marketing analytics` - `creative analytics` - `Skai API` - `data enrichment` - `Python ETL` - `CSV/JSON pipelines` - `data quality checks` - `AI-ready dataset preparation`
 
-## Security
+## Public Scope
 
-This is a sanitized showcase repository. It contains no Skai credentials, client IDs, refresh tokens, profile IDs, private image URLs, proprietary performance exports, or thesis datasets.
+This public version contains no platform credentials, client IDs, refresh tokens, profile IDs, private image URLs, proprietary performance exports, or thesis datasets.

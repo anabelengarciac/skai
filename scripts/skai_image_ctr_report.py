@@ -630,6 +630,8 @@ def build_mapping_by_ad_id(records: list[dict[str, Any]]) -> dict[str, dict[str,
     for ad_id, items in grouped.items():
         preferred = choose_preferred_row(items)
         unique_image_urls = unique_non_empty_values(items, "ImageUrl")
+        # Business rule: keep all distinct image URLs for an ad instead of picking one silently.
+        # Multiple URLs are a quality signal that the analyst should review before visual scoring.
         mapping[ad_id] = {
             "AdId": ad_id,
             "ImageUrl": " | ".join(unique_image_urls),
@@ -679,6 +681,8 @@ def enrich_rows(
             enriched_row["ImageUrlCount"] = match.get("ImageUrlCount", 0)
             enriched_row["SkaiMatchStatus"] = "matched"
         else:
+            # Business rule: preserve unmatched rows with an explicit status. Dropping them
+            # would inflate match rates and hide gaps in the creative-analysis dataset.
             enriched_row["ImageUrl"] = ""
             enriched_row["ImageUrlCount"] = 0
             enriched_row["SkaiMatchStatus"] = "unmatched"

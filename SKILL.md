@@ -1,6 +1,6 @@
 ---
 name: spirits-creative-image-enrichment
-description: Enrich a trusted performance dataset with creative image URLs from Skai using AdId as the mapping key. Use when Codex needs to prepare AI-ready creative analytics datasets, especially for spirits advertising analysis, without using Skai as the main source of performance metrics. If no country is specified, assume USA.
+description: Enrich a trusted performance dataset with creative image URLs using AdId as the mapping key. Use when an assistant needs to prepare AI-ready creative analytics datasets, especially for spirits advertising analysis, without using the ad platform as the main source of performance metrics. If no country is specified, assume USA.
 ---
 
 # Spirits Creative Image Enrichment
@@ -117,7 +117,7 @@ Los nombres del dataset externo no tienen que coincidir con los de Skai. El mapp
 - `L1_UNIQUE_AD_ID` -> `AdId` extraido
 - `L1_SKAI_COUNTRY_CODE_ISO2` -> `country`
 
-Si tu cuenta de Skai usa otros nombres de campo para `ImageUrl` o `AdId`, copiar y ajustar [field-config.example.json](references/field-config.example.json) y ejecutar con `--field-config`.
+Si la cuenta usa otros nombres de campo para `ImageUrl` o `AdId`, duplicar y ajustar [field-config.example.json](references/field-config.example.json) y ejecutar con `--field-config`.
 
 ## Testing
 
